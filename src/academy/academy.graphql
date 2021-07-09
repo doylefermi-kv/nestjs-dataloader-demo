@@ -1,0 +1,56 @@
+type User {
+  id: ID!
+  name: String!
+  video: [Video]
+}
+
+type Query {
+  getUser(id: ID!): User
+  getUsers: [User]
+  getVideo(id: ID!): Video
+  getVideos: [Video]
+}
+
+type Video {
+  id: ID!
+  name: String!
+  speakers: [User]
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(id: ID! updateUserInput: UpdateUserInput!): User!
+  removeUser(id: ID!): User
+  
+  createVideo(createVideoInput: CreateVideoInput!): Video!
+  updateVideo(id: ID! updateVideoInput: UpdateVideoInput!): Video!
+  removeVideo(id: ID!): Video
+
+  addSpeaker(addSpeakerInput: AddSpeakerInput!): Speaker!
+}
+
+input CreateUserInput {
+  name: String!
+}
+
+input UpdateUserInput {
+  name: String
+}
+
+input CreateVideoInput {
+  name: String!
+}
+
+input UpdateVideoInput {
+  name: String
+}
+
+input AddSpeakerInput {
+  userId: Int!
+  videoId: Int!
+}
+
+type Speaker {
+  userId: ID!
+  videoId: ID!
+}
