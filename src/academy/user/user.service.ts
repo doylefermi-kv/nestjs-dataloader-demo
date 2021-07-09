@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserInput, UpdateUserInput } from 'src/schema/graphql.schema';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { User } from './entity/user.entity';
 
 @Injectable()
@@ -20,6 +20,13 @@ export class UserService {
       return user;
     }
     throw new NotFoundException(`User ${id} does not exist`);
+  }
+
+  async findByIds(id): Promise<User[]> {
+    const user = await this.userRepository.find({
+      where: { id: In(id) },
+    });
+    return user;
   }
 
   async findAll(): Promise<User[]> {
@@ -47,6 +54,6 @@ export class UserService {
   async remove(id: string): Promise<User> {
     const user = await this.findOne(id);
     await this.userRepository.remove(user);
-    return { ...user, id: -1 };
+    return { ...user, id: '-1' };
   }
 }

@@ -1,5 +1,7 @@
 import { Args, Mutation, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { CreateUserInput, UpdateUserInput } from 'src/schema/graphql.schema';
+import UserVideosLoader from '../loader/uservideos.loader';
+import VideoLoader from '../loader/video.loader';
 import { Video } from '../video/entity/video.entity';
 import { SpeakerService } from '../videospeaker/speaker.service';
 import { UserService } from './user.service';
@@ -8,7 +10,7 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
-    private readonly speakerService: SpeakerService,
+    private readonly userVideosLoader: UserVideosLoader,
   ) {}
 
   @Query('getUser')
@@ -41,10 +43,7 @@ export class UserResolver {
 
   @ResolveField('video')
   async videos(user) {
-    const videosOfUser = await this.speakerService.getVideos(user.id);
-
-    const videos: Video[] = [];
-    videosOfUser.forEach(async (video) => videos.push(video.video));
-    return videos;
+    const videosOfUser = await this.userVideosLoader.getUserVideosLoader().load(user.id);
+    return videosOfUser;
   }
 }

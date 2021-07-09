@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddSpeakerInput } from 'src/schema/graphql.schema';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Speaker } from './entity/speaker.entity';
 
 @Injectable()
@@ -31,16 +31,28 @@ export class SpeakerService {
   async getSpeakers(videoId): Promise<Speaker[]> {
     const speakers = await this.speakerRepository.find({
       where: { videoId },
-      relations: ['speaker'],
     });
     return speakers;
+    // const speakers = await this.speakerRepository.find({
+    //   where: { videoId },
+    // });
+    // const speakersArray: string[] = [];
+    // speakers.forEach(async (speaker) => speakersArray.push(speaker.userId));
+    // return speakersArray;
   }
 
   async getVideos(userId): Promise<Speaker[]> {
     const videos = await this.speakerRepository.find({
       where: { userId },
-      relations: ['video'],
+      // relations: ['video'],
     });
     return videos;
+  }
+
+  async getSpeakersByIds(videoId): Promise<Speaker[]> {
+    const speakers = await this.speakerRepository.find({
+      where: { videoId: In(videoId) },
+    });
+    return speakers;
   }
 }

@@ -5,7 +5,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Video {
   @PrimaryGeneratedColumn()
-  public id!: number;
+  public id!: string;
 
   @Column()
   public name!: string;

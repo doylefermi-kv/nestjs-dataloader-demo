@@ -46,11 +46,11 @@ input UpdateVideoInput {
 }
 
 input AddSpeakerInput {
-  userId: Int!
-  videoId: Int!
+  userId: String!
+  videoId: String!
 }
 
 type Speaker {
-  userId: ID!
-  videoId: ID!
+  userId: String!
+  videoId: String!
 }

@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateVideoInput, UpdateVideoInput } from 'src/schema/graphql.schema';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Video } from './entity/video.entity';
 
 @Injectable()
@@ -47,6 +47,13 @@ export class VideoService {
   async remove(id: string): Promise<Video> {
     const video = await this.findOne(id);
     await this.videoRepository.remove(video);
-    return { ...video, id: -1 };
+    return { ...video, id: '-1' };
+  }
+
+  async findByIds(id): Promise<Video[]> {
+    const video = await this.videoRepository.find({
+      where: { id: In(id) },
+    });
+    return video;
   }
 }

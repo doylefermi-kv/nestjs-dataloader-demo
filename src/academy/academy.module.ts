@@ -13,6 +13,10 @@ import { Video } from './video/entity/video.entity';
 import { SpeakerResolver } from './videospeaker/speaker.resolver';
 import { SpeakerService } from './videospeaker/speaker.service';
 import { Speaker } from './videospeaker/entity/speaker.entity';
+import UserLoader from './loader/user.loader';
+import VideoLoader from './loader/video.loader';
+import UserVideosLoader from './loader/uservideos.loader';
+import VideoUsersLoader from './loader/videousers.loader';
 
 @Module({
   imports: [
@@ -37,6 +41,10 @@ import { Speaker } from './videospeaker/entity/speaker.entity';
     VideoResolver,
     SpeakerResolver,
     SpeakerService,
+    VideoLoader,
+    UserLoader,
+    UserVideosLoader,
+    VideoUsersLoader,
   ],
 })
 export class AcademyModule {}

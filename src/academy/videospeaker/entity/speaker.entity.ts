@@ -5,10 +5,10 @@ import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 @Entity('video_speaker')
 export class Speaker {
   @PrimaryColumn({ name: 'user_id' })
-  userId: number;
+  userId: string;
 
   @PrimaryColumn({ name: 'video_id' })
-  videoId: number;
+  videoId: string;
 
   @ManyToOne(() => User, (user) => user.videos, { primary: true })
   @JoinColumn({ name: 'user_id' })

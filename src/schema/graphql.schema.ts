@@ -24,8 +24,8 @@ export interface UpdateVideoInput {
 }
 
 export interface AddSpeakerInput {
-    userId: number;
-    videoId: number;
+    userId: string;
+    videoId: string;
 }
 
 export interface User {
